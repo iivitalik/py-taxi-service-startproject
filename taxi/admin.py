@@ -20,18 +20,23 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(Driver)
 class DriverAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'license_number')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    search_fields = ('username', 'first_name', 'last_name', 'email', 'license_number')
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
         ('Additional info', {'fields': ('license_number',)}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'license_number'),
+            'fields': ('username', 'password1', 'password2', 'email',
+                       'first_name', 'last_name', 'license_number'),
         }),
     )
